@@ -1,6 +1,6 @@
 /**
  * @author Brodusch Thomas
- * @version 2.130208
+ * @version 2.13.2.8
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,7 +36,7 @@ import java.util.StringTokenizer;
 		
 		
 		public void parseData(String id) throws IOException,Exception {
-			// Parsing des infos de la molécule de la PDB.
+			// Parsing des infos de la mol��cule de la PDB.
 		String qstr = "?pdbids="+id+"&customReportColumns=structureId,structureTitle,structureAuthor,releaseDate&format=csv&service=wsfile";
 		String urlStr = ReportLOCATION + qstr;
 		URL url = new URL(urlStr);
@@ -59,9 +59,9 @@ import java.util.StringTokenizer;
 			String c=new String("\"");
 			String d=new String("");
 			
-			// Remplacement des caractères  "," définissant un délimiteur de champs, par _ 
+			// Remplacement des caract��res  "," d��finissant un d��limiteur de champs, par _ 
 			line = line.replaceAll(a,b);
-			// Suppression des " présent dans la line lu.
+			// Suppression des " pr��sent dans la line lu.
 			line = line.replaceAll(c,d);
 			
 /* F I N 	C O R R E C T I O N 		D U		 B U G */

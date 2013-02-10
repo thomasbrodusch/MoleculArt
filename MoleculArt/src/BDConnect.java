@@ -4,7 +4,7 @@ import java.util.*;
 /**
 * Classe de connection a la database locale de l'application.
 * @author Brodusch Thomas
-* @version 1.0
+* @version 1.13.2.5
 * 
 */
 
@@ -42,7 +42,7 @@ public class BDConnect {
  */
 	public void init(){
 	
-		if( this.loadPilot() ){ // Si pilote chargé, connection !
+		if( this.loadPilot() ){ // Si pilote charg��, connection !
 			this.connect();
 		}
 	}
@@ -81,7 +81,7 @@ public class BDConnect {
 			Properties props = new Properties(); 
 			props.setProperty("user",this.login); 
 			props.setProperty("password",this.pass); 
-			//props.setProperty("ssl","true"); fontionne ssi le serveur à activé SSL.
+			//props.setProperty("ssl","true"); fontionne ssi le serveur �� activ�� SSL.
 			
 			Connection connect = DriverManager.getConnection(DBurl, props);
 			

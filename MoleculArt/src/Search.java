@@ -16,7 +16,7 @@ import java.util.List;
 * Utilise l'API REST de la PDB (requetes XML).<br/>
 * 
 * @author Brodusch Thomas
-* @version 1.130208
+* @version 1.13.2.8
 * 
 */
 public class Search {
@@ -69,7 +69,7 @@ public class Search {
 	
 /**
  * 	Verifie que les champs de la recherche ne sont pas vides (au moins un champ rempli).
- * @return Retourne "true" si l'utilisateur à au moins renseigne un champ.
+ * @return Retourne "true" si l'utilisateur �� au moins renseigne un champ.
  * 
  * */
 	         public boolean validFields(){ return ( (this.Id != "") || (this.author!="") || (this.dateMin != 0) || (this.dateMax != 0) ); }
@@ -114,7 +114,7 @@ public class Search {
 					 +"</queryRefinement>";
 		        	 }
 		        	 
-		        	 if ((this.dateMin != 0) && (this.dateMax != 0) ){
+		        	 if ((this.dateMin > 1992) && (this.dateMax < 2013) ){
 		        		 if(this.author != ""){ this.operateur ="and"; }
 		        		 this.xml = this.xml
 		        				 +"<orgPdbQuery>"

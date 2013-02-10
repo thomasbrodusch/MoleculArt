@@ -1,6 +1,7 @@
 
-/*
- *	@authors Brodusch Thomas & Lavergne Kévin
+/**
+ * Classe de MÀJ de la BDD application.
+ *	@authors Brodusch Thomas & Lavergne Kevin
  *	@version 1.0
  * 
  * 
@@ -41,7 +42,7 @@ public class BDMaJ {
 		try{
 			for(String id:postQuery())
 			{
-				this.parseData(id); // si on remplace id par un id molécule sa fait la recherche ?! note: alors pas besoin de database intermediaire ?!
+				this.parseData(id); // si on remplace id par un id mol��cule sa fait la recherche ?! note: alors pas besoin de database intermediaire ?!
 			}
 		}catch(IOException e){
 			e.printStackTrace();
@@ -75,13 +76,13 @@ public class BDMaJ {
 		OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
 		wr.write(data);
 		wr.flush();
-			// Récupère la réponse.
+			// R��cup��re la r��ponse.
 		return conn.getInputStream();
 
 	}
 	
 	public void parseData(String id) throws IOException,Exception {
-			// Parsing des infos molécules de la PDB.
+			// Parsing des infos mol��cules de la PDB.
 		String qstr = "?pdbids="+id+"&customReportColumns=structureId,structureTitle,structureAuthor,releaseDate&format=csv&service=wsfile";
 		String urlStr = ReportLOCATION + qstr;
 		URL url = new URL(urlStr);
@@ -104,9 +105,9 @@ public class BDMaJ {
 			String c=new String("\"");
 			String d=new String("");
 			
-			// Remplacement des caractères  "," définissant un délimiteur de champs, par _ 
+			// Remplacement des caract��res  "," d��finissant un d��limiteur de champs, par _ 
 			line = line.replaceAll(a,b);
-			// Suppression des " présent dans la line lu.
+			// Suppression des " pr��sent dans la line lu.
 			line = line.replaceAll(c,d);
 			
 /* F I N 	C O R R E C T I O N 		D U		 B U G */
@@ -147,11 +148,11 @@ public class BDMaJ {
 				asNext = resultats.next();
 		}
 		resultats.close();
-				// Si la query a renvoyé un résultat (!= null) c'est que la molécule est déja existante
+				// Si la query a renvoy�� un r��sultat (!= null) c'est que la mol��cule est d��ja existante
 				if (resultQuery != null){
 					test = true; 
 				}
-				// Si la query n'a pas renvoyé de résultat c'est que la molécule n'existe pas dans la database
+				// Si la query n'a pas renvoy�� de r��sultat c'est que la mol��cule n'existe pas dans la database
 				else{ 
 					
 					test = false;
@@ -165,9 +166,9 @@ public class BDMaJ {
 	public void insertInBd(String idmol, String nom, String auteur, String date){
 		// Insertion sous la forme "idmol" "nom" "auteur" "date" dans la table molecules de la database application.
 		try{
-				// Si TRUE c'est que la molécule est déja existante -> On ne charge pas la molécule dans la database.
+				// Si TRUE c'est que la mol��cule est d��ja existante -> On ne charge pas la mol��cule dans la database.
 				if ( isExist(idmol) ){ System.out.println("-###- existing data. -###-\n"); }
-				// Si FALSE c'est que la molécule n'existe pas dans la database -> On charge la molécule dans la database.
+				// Si FALSE c'est que la mol��cule n'existe pas dans la database -> On charge la mol��cule dans la database.
 				else { 
 					this.stmt.executeUpdate("INSERT INTO molecules(idmol,nom,auteur,date) VALUES ('"+idmol+"', '"+nom+"', '"+auteur+"', '"+date+"');");
 					System.out.println("-###- new data import w/ success ! -###-\n");
