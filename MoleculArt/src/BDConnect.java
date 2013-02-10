@@ -38,7 +38,7 @@ public class BDConnect {
  * Initialisation de la connection.
  * Charge en premier temps le pilote de la BDD.
  * Si chargement du pilote reussi -> on etablit la connection a la BDD.
- * @see loadPilot()
+ * @see #loadPilot()
  */
 	public void init(){
 	

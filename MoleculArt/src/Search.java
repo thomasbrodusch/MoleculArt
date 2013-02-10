@@ -137,7 +137,7 @@ public class Search {
 * 
 * @param xml
 * 		requete XML finale. 
-* @see xmlCooker()
+* @see #xmlCooker()
 * @return une liste de PDBid.
 */
 	   public List<String> postQuery(String xml) 
