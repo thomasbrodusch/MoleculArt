@@ -167,11 +167,11 @@ public class BDMaJ {
 		// Insertion sous la forme "idmol" "nom" "auteur" "date" dans la table molecules de la database application.
 		try{
 				// Si TRUE c'est que la mol��cule est d��ja existante -> On ne charge pas la mol��cule dans la database.
-				if ( isExist(idmol) ){ System.out.println("-###- existing data. -###-\n"); }
+				if ( isExist(idmol) ){ System.out.println("[ INFO ] - existing data. ###\n"); }
 				// Si FALSE c'est que la mol��cule n'existe pas dans la database -> On charge la mol��cule dans la database.
 				else { 
 					this.stmt.executeUpdate("INSERT INTO molecules(idmol,nom,auteur,date) VALUES ('"+idmol+"', '"+nom+"', '"+auteur+"', '"+date+"');");
-					System.out.println("-###- new data import w/ success ! -###-\n");
+					System.out.println("[ INFO ] - new data import w/ success ! ###\n");
 				}
 		}catch (SQLException e) {
 	        e.printStackTrace();

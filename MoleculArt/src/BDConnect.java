@@ -61,10 +61,10 @@ public class BDConnect {
 			if (this.bddType == "mysql" ){
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
 			}
-			System.out.println("### database pilote '"+ this.bddType+"' loaded with success ! ###");	
+			System.out.println("[ INFO ] - database pilote '"+ this.bddType+"' loaded with success ! ###");	
 			return true;
 		} catch (Exception e) {
-			System.out.println("### error ! database pilot can't load ! ###");
+			System.out.println("[ ERROR ] - database pilot can't load ! ###\n");
 			e.printStackTrace();
 			return false;
 			//System.exit(99);
@@ -86,9 +86,9 @@ public class BDConnect {
 			Connection connect = DriverManager.getConnection(DBurl, props);
 			
 			this.stmt = connect.createStatement();
-				System.out.println("### connected on the database '"+this.bddUrl+"' with success ! ###");					
+				System.out.println("[ INFO ] - connected on the database '"+this.bddUrl+"' with success ! ###");					
 		} catch (SQLException e) { 
-			System.out.println("### unable to connect on the database'"+this.bddUrl+"' - database down/wrong password? ###");
+			System.out.println("[ ERROR ] - unable to connect on the database'"+this.bddUrl+"' - database down/wrong password? ###\n");
 			//e.printStackTrace();	ps:rapport erreur complet.
 		}
 	}

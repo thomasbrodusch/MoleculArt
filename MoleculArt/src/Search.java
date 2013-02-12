@@ -46,7 +46,7 @@ public class Search {
 	        	//System.out.println(validFields()); /**/
 	        	
 	        	if( this.validFields() ){
-	        		
+	        		System.out.println("[ INFO ] - Start search ... ###\n");
 				         try {
 				            List<String> pdbIds = this.postQuery(this.xmlCooker());
 			
@@ -58,7 +58,7 @@ public class Search {
 				            for (String string : pdbIds) {
 				               //System.out.println(string); string=PDBiD
 				               
-				            	Parser pars = new Parser(string);
+				            	ParserReport pars = new ParserReport(string);
 				            	pars.init();
 				            	
 				            }
@@ -85,7 +85,7 @@ public class Search {
 *  	 
 */    
 	          public String xmlCooker(){
-	        	
+	        	this.operateur="and";
 	        	if(this.Id != ""){ 
 	        				 this.xml =this.xml
  			 	
@@ -100,7 +100,7 @@ public class Search {
 		        	 +"</queryRefinement>";
 	        	 } 
 		        	 if(author != ""){
-		        		 	if(this.Id != ""){ this.operateur="and"; }
+		        		 	//if(this.Id != ""){ this.operateur="and"; }
 		        		 this.xml= this.xml		       
 		        	 +"<queryRefinement>"
 		        	 +"<queryRefinementLevel>1</queryRefinementLevel>"
@@ -113,9 +113,9 @@ public class Search {
 					  +"</orgPdbQuery>"
 					 +"</queryRefinement>";
 		        	 }
-		        	 
-		        	 if ((this.dateMin > 1992) && (this.dateMax < 2013) ){
-		        		 if(this.author != ""){ this.operateur ="and"; }
+		        	 /*
+		        	 if (this.date(this.dateMin > 1992) && (this.dateMax < 2013) ){
+		        		 //if(this.author != ""){ this.operateur ="and"; }
 		        		 this.xml = this.xml
 		        				 +"<orgPdbQuery>"
 		        		    +"<version>head</version>"
@@ -127,7 +127,7 @@ public class Search {
 		        		    +"<database_PDB_rev.mod_type.value>1</database_PDB_rev.mod_type.value>"
 		        		 +"</orgPdbQuery>";
 		        	 }
-					
+					*/
 		        	 
 		        	// System.out.println(this.xml);
 	        	 return (this.xml+"<conjunctionType>"+this.operateur+"</conjunctionType>"+"</orgPdbCompositeQuery>");

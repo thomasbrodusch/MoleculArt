@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 	
 	
 
-	public class Parser {
+	public class ParserReport {
 		
 
 		public static final String ReportLOCATION = "http://www.rcsb.org/pdb/rest/customReport";
@@ -19,7 +19,7 @@ import java.util.StringTokenizer;
 		public String PDBiD;
 		
 		
-		public Parser(String id){ this.PDBiD = id;}
+		public ParserReport(String id){ this.PDBiD = id;}
 		
 		
 		public void init(){
@@ -36,7 +36,7 @@ import java.util.StringTokenizer;
 		
 		
 		public void parseData(String id) throws IOException,Exception {
-			// Parsing des infos de la mol��cule de la PDB.
+			// Parsing des infos de la molécule de la PDB.
 		String qstr = "?pdbids="+id+"&customReportColumns=structureId,structureTitle,structureAuthor,releaseDate&format=csv&service=wsfile";
 		String urlStr = ReportLOCATION + qstr;
 		URL url = new URL(urlStr);
@@ -53,15 +53,15 @@ import java.util.StringTokenizer;
 		int i;
 		
 		while ((line = rd.readLine()) != null) {
-/* D E B U T	C O R R E C T I O N 		D U		 B U G */ 
+/* D E B U T	C O R R E C T I O N 		D U		 B U G par Brodusch Thomas v1.2*/ 
 			String a=new String("\",\"");
 			String b=new String("_");
 			String c=new String("\"");
 			String d=new String("");
 			
-			// Remplacement des caract��res  "," d��finissant un d��limiteur de champs, par _ 
+			// Remplacement des caractères  "," définissant un délimiteur de champs, par _ 
 			line = line.replaceAll(a,b);
-			// Suppression des " pr��sent dans la line lu.
+			// Suppression des " présent dans la line lu.
 			line = line.replaceAll(c,d);
 			
 /* F I N 	C O R R E C T I O N 		D U		 B U G */
