@@ -14,7 +14,7 @@ public class Main {
 	public static void main(String[] args){
 		
 			
-		BDConnect DBConect = new BDConnect("T0maT0","hacka47","postgresql","localhost:5432/T0maT0");
+		BDConnect DBConect = new BDConnect("T0maT0","root","postgresql","localhost:5432/T0maT0");
 		DBConect.init();
 		
 		
