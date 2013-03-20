@@ -1,5 +1,5 @@
 /** 
- * Classe de telechargement de fichier .PDB ou .XML
+ * Classe de telechargement de fichier .PDB ou .XML -> FTP
  * @author Brodusch Thomas
  * @version 1.13.2.10
  */
@@ -15,7 +15,7 @@ import java.io.OutputStream;
 
 
 	  
-public class Downloader {
+public class DownloaderFTP {
 	
 	
 	         public FTPClient client = new FTPClient();
@@ -26,7 +26,7 @@ public class Downloader {
 	         
 	       
 
-	         public Downloader(){ }
+	         public DownloaderFTP(){ }
 	         
 
 	         	
@@ -73,7 +73,7 @@ public class Downloader {
 	         	        		 this.dossierPDB = "/pub/databases/rcsb/pdb-remediated/data/structures/divided/";
 	         	        		 
 	         	        		 System.out.println("[ INFO ] - connected to ftp.ebi.ac.uk - EU server ###");
-	         	        	 }catch(Exception e1){ System.out.println("[ ERROR ] - EU Server unreachable ###\n");
+	         	        	 }catch(Exception e1){ System.err.println("[ ERROR ] - EU Server unreachable ###\n");
 	         	        	 		//JP SERVER.
 	         	        	 		try{
 	         	        	 			client.connect("ftp.pdbj.org",21);
@@ -81,7 +81,7 @@ public class Downloader {
 	         	        	 			this.dossierPDB = "/pub/pdb/data/structures/divided/";
  	        	 				
 	         	        	 			System.out.println("[ INFO ] - connected to ftp.pdbj.org - JP server ###");
-	         	        	 		}catch(Exception e2){ System.out.println("[ ERROR ] - JP Server unreachable ###\n");		
+	         	        	 		}catch(Exception e2){ System.err.println("[ ERROR ] - JP Server unreachable ###\n");		
 	         	        	 			//US SERVER.
 	         	        	 			try{
 	         	        	 				client.connect("ftp.wwpdb.org",21);
@@ -89,7 +89,7 @@ public class Downloader {
 	         	        	 				this.dossierPDB = "/pub/pdb/data/structures/divided/";
 	         	        	 			
 	         	        	 				System.out.println("[ INFO ] - connected to ftp.wwpdb.org - US server ###");
-	         	        	 			}catch(Exception e3){ System.out.println("[ ERROR ] - US Server unreachable ###\n");
+	         	        	 			}catch(Exception e3){ System.err.println("[ ERROR ] - US Server unreachable ###\n");
 	         	        	 			
 	         	        	 			
 	         	        	 			}//end catch e3
@@ -107,7 +107,7 @@ public class Downloader {
 					System.out.println("[ INFO ] - disconnected from ftp. bye :) ###\n");
 					
 				} catch (IOException e) {
-					System.out.println("[ ERROR ] - can't disconnect from ftp. ###\n");
+					System.err.println("[ ERROR ] - can't disconnect from ftp. ###\n");
 					e.printStackTrace();
 				}
 	        }
@@ -195,7 +195,7 @@ public class Downloader {
 		    in.close();
 		    out.close();
 		    System.out.println("[ INFO ] - '"+this.filename+"' successful extracted to '"+target+"' ###");
-		    }catch(Exception e){ System.out.println("[ ERROR ] - Unextract error !\n"); e.printStackTrace();}
+		    }catch(Exception e){ System.err.println("[ ERROR ] - Unextract error !\n"); e.printStackTrace();}
 		    
 		    
 		    

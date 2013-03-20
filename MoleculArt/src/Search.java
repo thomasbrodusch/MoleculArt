@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/** ######	UNDER CONSTRUCTION ######<br/>
+/** 
 * Classe de recherche d'une molecule presente dans la ProteinDataBank en fonction de differents parametres (mode online).<br/>
 * Utilise l'API REST de la PDB (requetes XML).<br/>
 * 
 * @author Brodusch Thomas
-* @version 1.13.2.8
+* @version 1.13.2.12
 * 
 */
 public class Search {
@@ -26,20 +26,24 @@ public class Search {
 	   
 
 	   public String xml="<orgPdbCompositeQuery version=\"1.0\">"; // header de la requete
-	   public  String operateur ="or";
+	   public  String operateur ="";
 	   public String Id="";
+	   public String organisme="";
 	   public String author="";
-	   public int dateMin;
-	   public int dateMax;
+	   public String dateMin="";
+	   public String dateMax="";
+	   public String motCle="";
 	   /*
 	    * TO-DO Ajouter les autres variables.
 	    */
 	      
-	       	public Search(String Id,String author,int dateMin, int dateMax) {
+	       	public Search(String Id,String organisme, String author,String dateMin, String dateMax,String motCle) {
 	       		 this.Id = Id;
+	       		 this.organisme = organisme;
 	        	 this.author = author;
 	        	 this.dateMin = dateMin;
 	        	 this.dateMax = dateMax;
+	        	 this.motCle = motCle;
 	       	}
 	       	
 	         public void init(){
@@ -64,15 +68,16 @@ public class Search {
 				            }
 				            System.out.println("\n\nFin de la recherche: "+pdbIds.size()+" molecule(s) trouves correspondante(s) a votre recherche.");
 				         }catch (Exception e){ e.printStackTrace(); }
-	        	 }else{ System.out.println("Veuillez renseigner au moins un champ de recherche."); }
+	        	 }else{ System.err.println("[ ERROR ] - veuillez renseigner au moins un champ de recherche."); }
 	   }
 	
 /**
  * 	Verifie que les champs de la recherche ne sont pas vides (au moins un champ rempli).
  * @return Retourne "true" si l'utilisateur �� au moins renseigne un champ.
  * 
- * */
-	         public boolean validFields(){ return ( (this.Id != "") || (this.author!="") || (this.dateMin != 0) || (this.dateMax != 0) ); }
+ */
+	         public boolean validFields(){ return ( (this.Id != "") || (this.author!="") || 
+	        		 (this.dateMin != "") || (this.dateMax != "") || (this.motCle != "") || (this.organisme != "")); }
 		        
 	         
 	         
@@ -86,7 +91,7 @@ public class Search {
 */    
 	          public String xmlCooker(){
 	        	this.operateur="and";
-	        	if(this.Id != ""){ 
+	        	if(this.Id != ""){ //Recherche PDBiD
 	        				 this.xml =this.xml
  			 	
  			 	+"<queryRefinement>"
@@ -99,8 +104,8 @@ public class Search {
 		        	 +"</orgPdbQuery>"
 		        	 +"</queryRefinement>";
 	        	 } 
-		        	 if(author != ""){
-		        		 	//if(this.Id != ""){ this.operateur="and"; }
+		        	 if(author != ""){	//Recherche auteur
+		        		 	
 		        		 this.xml= this.xml		       
 		        	 +"<queryRefinement>"
 		        	 +"<queryRefinementLevel>1</queryRefinementLevel>"
@@ -113,21 +118,66 @@ public class Search {
 					  +"</orgPdbQuery>"
 					 +"</queryRefinement>";
 		        	 }
-		        	 /*
-		        	 if (this.date(this.dateMin > 1992) && (this.dateMax < 2013) ){
-		        		 //if(this.author != ""){ this.operateur ="and"; }
+		        	 
+		        	 if ((this.dateMin != "") && (this.dateMax != "") ){ //Recherche intervalle Datemin-Datemax
+		        		 
 		        		 this.xml = this.xml
-		        				 +"<orgPdbQuery>"
-		        		    +"<version>head</version>"
-		        		   +" <queryType>org.pdb.query.simple.ReleaseDateQuery</queryType>"
-		        		   +" <database_PDB_rev.date.comparator>between</database_PDB_rev.date.comparator>"
-		        		    +"<database_PDB_rev.date.min>"+this.dateMin+"</database_PDB_rev.date.min>"
-		        		    +"<database_PDB_rev.date.max>"+this.dateMax+"</database_PDB_rev.date.max>"
-		        		    +"<database_PDB_rev.mod_type.comparator><![CDATA[<]]></database_PDB_rev.mod_type.comparator>"
-		        		    +"<database_PDB_rev.mod_type.value>1</database_PDB_rev.mod_type.value>"
-		        		 +"</orgPdbQuery>";
+		        				 +"<queryRefinement>"
+								  +"<queryRefinementLevel>1</queryRefinementLevel>"
+								  +"<conjunctionType>and</conjunctionType>"
+								  +"<orgPdbQuery>"
+								    +"<version>head</version>"
+								    +"<queryType>org.pdb.query.simple.DepositDateQuery</queryType>"
+								    +"<description><![CDATA[DepositDateQuery: database_PDB_rev.date_original.comparator=between database_PDB_rev.date_original.min=1993-01-01 database_PDB_rev.date_original.max=2006-01-01 database_PDB_rev.mod_type.comparator=< database_PDB_rev.mod_type.value=1 ]]></description>"
+								    +"<queryId>83DA881B</queryId>"
+								    +"<resultCount>35362</resultCount>"
+								    +"<runtimeStart>2013-02-12T19:56:23Z</runtimeStart>"
+								    +"<runtimeMilliseconds>530</runtimeMilliseconds>"
+								    +"<database_PDB_rev.date_original.comparator>between</database_PDB_rev.date_original.comparator>"
+								    +"<database_PDB_rev.date_original.min>"+this.dateMin+"</database_PDB_rev.date_original.min>"
+								    +"<database_PDB_rev.date_original.max>"+this.dateMax+"</database_PDB_rev.date_original.max>"
+								    +"<database_PDB_rev.mod_type.comparator><![CDATA[<]]></database_PDB_rev.mod_type.comparator>"
+								    +"<database_PDB_rev.mod_type.value>1</database_PDB_rev.mod_type.value>"
+								 +" </orgPdbQuery>"
+								 +"</queryRefinement>";
 		        	 }
-					*/
+		        	 
+		        	 if(this.motCle != ""){	//Recherche mots-clé.
+		        		 	
+		        		 this.xml= this.xml		       
+		        	 +"<queryRefinement>"
+		        	 +"<queryRefinementLevel>1</queryRefinementLevel>"
+		        	 +"<conjunctionType>and</conjunctionType>"
+		        		  +"<orgPdbQuery>"
+		        		   +"<version>head</version>"
+		        		   +"<queryType>org.pdb.query.simple.AdvancedKeywordQuery</queryType>"
+		        		   +"<description>Text Search for: chen</description>"
+		        		    +"<queryId>5026F94E</queryId>"
+		        		    +"<resultCount>3126</resultCount>"
+		        		   +"<runtimeStart>2013-02-12T20:07:25Z</runtimeStart>"
+		        		   +"<runtimeMilliseconds>57</runtimeMilliseconds>"
+		        		   +"<keywords>"+this.motCle+"</keywords>"
+		        		 +"</orgPdbQuery>"
+		        		 +"</queryRefinement>";
+		        	 }
+		        	 if(this.organisme != ""){	//Recherche organisme.
+		        		 	
+		        		 this.xml= this.xml	
+		        				 +"<queryRefinement>"
+		        	  +"<queryRefinementLevel>0</queryRefinementLevel>"
+		        	  +"<orgPdbQuery>"
+		        	    +"<version>head</version>"
+		        	    +"<queryType>org.pdb.query.simple.ExpressionOrganismQuery</queryType>"
+		        	    +"<description>ExpressionOrganismQuery: entity_src_gen.pdbx_host_org_scientific_name.comparator=equals entity_src_gen.pdbx_host_org_scientific_name.value="+this.organisme+"</description>"
+		        	    +"<queryId>C80B636D</queryId>"
+		        	    +"<resultCount>53473</resultCount>"
+		        	    +"<runtimeStart>2013-02-12T20:14:37Z</runtimeStart>"
+		        	    +"<runtimeMilliseconds>667</runtimeMilliseconds>"
+		        	    +"<entity_src_gen.pdbx_host_org_scientific_name.comparator>equals</entity_src_gen.pdbx_host_org_scientific_name.comparator>"
+		        	    +"<entity_src_gen.pdbx_host_org_scientific_name.value>Escherichia coli</entity_src_gen.pdbx_host_org_scientific_name.value>"
+		        	  +"</orgPdbQuery>"
+		        	 +"</queryRefinement>";
+		        	 }
 		        	 
 		        	// System.out.println(this.xml);
 	        	 return (this.xml+"<conjunctionType>"+this.operateur+"</conjunctionType>"+"</orgPdbCompositeQuery>");
@@ -143,65 +193,38 @@ public class Search {
 	   public List<String> postQuery(String xml) 
 	      throws IOException{
 
-	      
-	      
 	      URL u = new URL(SERVICELOCATION);
-
-	      
 	      String encodedXML = URLEncoder.encode(xml,"UTF-8");
-
-	      
 	      InputStream in =  doPOST(u,encodedXML);
-	      
 	      List<String> pdbIds = new ArrayList<String>();
-
-	      
 	      BufferedReader rd = new BufferedReader(new InputStreamReader(in));
-
 	      String line;
-	      while ((line = rd.readLine()) != null) {
-
-	        pdbIds.add(line);
-	         
-	      }      
-	      rd.close();
-
-	           
-	      return pdbIds;
-
-	  
 	      
+	      while ((line = rd.readLine()) != null) { pdbIds.add(line); }      
+	      rd.close();
+	      return pdbIds;
 	   }
 	   
 /** Fait une requete POST sur une URL et retourne la reponse.
-* 
-* 
+*
 * @param url
 * @return	reponse a la requete POST.
 * @throws IOException
 */
 	   public static InputStream doPOST(URL url, String data)
+			   throws IOException{
 
-	   throws IOException 
-	   {
+		   			// Envoi de data.
+		   			URLConnection conn = url.openConnection();
+		   			conn.setDoOutput(true);
+		   			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+		   			wr.write(data);
+		   			wr.flush();
 
-	   // Envoi de data.
-	      
-	      URLConnection conn = url.openConnection();
-
-	      conn.setDoOutput(true);
-	      
-	      OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-
-	      wr.write(data);
-	      wr.flush();
-
-	  
-	      // Retourne la reponse.
-	      return conn.getInputStream();
-	                
-	   }
-}
+		   			// Retourne la reponse.
+		   			return conn.getInputStream();
+	              }
+		}
 	   
 	 
 
