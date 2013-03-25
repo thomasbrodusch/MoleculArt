@@ -45,4 +45,4 @@ Moleculart is developped by this persons :
 	- Coquerelle Grégory
 	- Balhasen Isame
 	
-... all students at "IUT PARIS XIII - NORD" Villetaneuse, FRANCE.
+... students at "IUT PARIS XIII - NORD" Villetaneuse, FRANCE.
