@@ -10,8 +10,8 @@ Java 3D molecular modeling.
     
     
 ########## Know Bugs ##########
-
-	- J3dcore bug on MacOs Lion/Mountain Lion when you launch a visualisation -> 3D Modeling Impossible: freeze.
+	- some problem with Java library path on Linux (we're going to fix it next version ;) )
+	- J3dcore bug on MacOs Lion/Mountain Lion when you launch a visualisation -> 3D Modeling Impossible: freeze. (impossible to fix at the moment)
 	
 
 If you find some others bugs, contact me ;)
