@@ -21,7 +21,7 @@ If you find some others bugs, contact me ;)
 Copyright © 2012 Thomas Brodusch, Kévin Laverne, Damien Kozak, Grégory Coquerelle, Isame Belhasene - IUT Paris XIII-Nord
 Students at "IUT PARIS XIII - NORD" Villetaneuse, FRANCE.
 
-Distributed under the Eclipse Public License.
+Distributed under the GNU General Public License.
 
     This program is free software: you can redistribute it and/or modify
      it under the terms of the GNU General Public License as published by
